@@ -1,3 +1,4 @@
+using ContactBook.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ContactBook.Data;
@@ -8,4 +9,6 @@ public class AppDbContext : DbContext
     {
         
     }
+
+    public DbSet<Contact> Contacts { get; set; }
 }

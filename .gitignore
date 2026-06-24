@@ -1,0 +1,87 @@
+# =========================================
+# macOS specific files
+# =========================================
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# =========================================
+# JetBrains IDEs (Rider)
+# =========================================
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
+.idea/
+*.sln.iml
+*.DotSettings.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# =========================================
+# .NET Core / Blazor / C#
+# =========================================
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+# MSBuild / Dotnet core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+.artifacts/
+.store/
+
+# Crash reports and logs
+errinfo.txt
+*.log
+
+# =========================================
+# Local Environment & PostgreSQL Secrets
+# =========================================
+# Prevent publishing local connection strings or environment variables
+appsettings.Development.json
+appsettings.Local.json
+.env
+.env.local
+
+# Local database dumps or scripts (if you generate them)
+*.bak
+*.sql.gz
+local_db_dumps/
+
+# =========================================
+# Web / Frontend (If using npm for CSS/JS tooling)
+# =========================================
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# =========================================
+# OS / Terminal History
+# =========================================
+.bash_history
+.zsh_history

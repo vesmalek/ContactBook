@@ -19,7 +19,7 @@
         </MudStack>
     } else if (!_contacts.Any())
     {
-        <MudPaper Class="pa-8 text-center">
+        <MudPaper Class="pr-20 pl-20 pt-8 pb-8 text-center" Elevation="2">
             <MudIcon Icon="@Icons.Material.Filled.PeopleOutline"
                      Size="Size.Large" />
 
@@ -105,10 +105,9 @@
     protected override async Task OnInitializedAsync()
     {
         _isLoading = true;
-        //await Task.Delay(3000); // simulate slow loading
-        _contacts = await DbContext.Contacts
-            .OrderByDescending(c => c.Id)
-            .ToListAsync();
+
+        _contacts = [];
+        
         _isLoading = false;
     }
     

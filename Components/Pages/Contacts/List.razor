@@ -6,9 +6,31 @@
 @inject NavigationManager NavigationManager
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="d-flex flex-column align-center mt-20">
-    @if (_contacts.Count == 0)
+    @if (_isLoading)
     {
-        <p>No contacts yet.</p>
+        <MudStack AlignItems="AlignItems.Center"
+                  Justify="Justify.Center"
+                  Style="height:300px;">
+
+            <MudProgressCircular Color="Color.Primary"
+                                 Indeterminate="true"
+                                 Size="Size.Large" />
+
+        </MudStack>
+    } else if (!_contacts.Any())
+    {
+        <MudPaper Class="pa-8 text-center">
+            <MudIcon Icon="@Icons.Material.Filled.PeopleOutline"
+                     Size="Size.Large" />
+
+            <MudText Typo="Typo.h6">
+                No contacts yet
+            </MudText>
+
+            <MudText Typo="Typo.body2">
+                Click the + button to add your first contact.
+            </MudText>
+        </MudPaper>
     }
     else
     {
@@ -76,14 +98,18 @@
 
 @code {
     private List<Contact> _contacts = new();
+    private bool _isLoading = true;
     
     private string _searchString = "";
 
     protected override async Task OnInitializedAsync()
     {
+        _isLoading = true;
+        //await Task.Delay(3000); // simulate slow loading
         _contacts = await DbContext.Contacts
             .OrderByDescending(c => c.Id)
             .ToListAsync();
+        _isLoading = false;
     }
     
     private bool FilterContacts(Contact contact)

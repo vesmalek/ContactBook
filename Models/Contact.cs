@@ -13,8 +13,10 @@ public class Contact
     public string LastName { get; set; } = string.Empty;
     [Required]
     [StringLength(50)]
+    [EmailAddress]
     public string Email { get; set; } = string.Empty;
     [StringLength(20)]
+    [Phone]
     public string PhoneNumber { get; set; } = string.Empty;
     [StringLength(75)]
     public string Company { get; set; }= string.Empty;

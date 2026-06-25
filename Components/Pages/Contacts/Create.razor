@@ -1,7 +1,87 @@
 @page "/contacts/create"
+@using ContactBook.Data
+@using ContactBook.Models
+@inject AppDbContext DbContext
 
-<h3>Create Contact</h3>
+<MudContainer MaxWidth="MaxWidth.Medium"
+              Class="d-flex flex-column align-center mt-10">
+    
+    <EditForm Model="_contact" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+
+        <MudCard Class="pa-6" Style="min-width:450px;">
+            <MudCardContent>
+
+                <MudText Typo="Typo.h5" Class="mb-4">
+                    Add Contact
+                </MudText>
+
+                <MudTextField T="string"
+                              Label="First Name"
+                              @bind-Value="_contact.FirstName"
+                              For="@(() => _contact.FirstName)"
+                              Immediate="true"
+                              Variant="Variant.Outlined" />
+
+                <MudTextField T="string"
+                              Label="Last Name"
+                              Class="mt-4"
+                              @bind-Value="_contact.LastName"
+                              For="@(() => _contact.LastName)"
+                              Immediate="true"
+                              Variant="Variant.Outlined" />
+
+                <MudTextField T="string"
+                              Label="Email"
+                              Class="mt-4"
+                              @bind-Value="_contact.Email"
+                              For="@(() => _contact.Email)"
+                              Immediate="true"
+                              Variant="Variant.Outlined" />
+
+                <MudTextField T="string"
+                              Label="Phone Number"
+                              Class="mt-4"
+                              @bind-Value="_contact.PhoneNumber"
+                              For="@(() => _contact.PhoneNumber)"
+                              Immediate="true"
+                              Variant="Variant.Outlined" />
+
+                <MudTextField T="string"
+                              Label="Company"
+                              Class="mt-4"
+                              @bind-Value="_contact.Company"
+                              For="@(() => _contact.Company)"
+                              Immediate="true"
+                              Variant="Variant.Outlined" />
+
+            </MudCardContent>
+
+            <MudCardActions>
+                <MudSpacer />
+
+                <MudButton ButtonType="ButtonType.Submit"
+                           Variant="Variant.Filled"
+                           Color="Color.Primary">
+                    Save Contact
+                </MudButton>
+
+            </MudCardActions>
+        </MudCard>
+    </EditForm>
+    
+</MudContainer>
 
 @code {
-    
+    private Contact _contact = new();
+    // private bool showSuccessMessage = false;
+
+    private async Task HandleSubmit()
+    {
+        DbContext.Contacts.Add(_contact);
+        await DbContext.SaveChangesAsync();
+
+        // showSuccessMessage = true;
+        _contact = new Contact();
+    }
 }

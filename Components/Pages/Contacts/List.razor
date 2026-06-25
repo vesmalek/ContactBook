@@ -4,15 +4,83 @@
 @using Microsoft.EntityFrameworkCore
 @inject AppDbContext DbContext
 
-<MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex flex-column align-center mt-10">
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="d-flex flex-column align-center mt-10">
+    
+    <MudTable Items="_contacts"
+              Hover="true"
+              Striped="true"
+              FixedHeader="true"
+              Height="500px"
+              Filter="FilterContacts">
+
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Contacts</MudText>
+
+            <MudSpacer />
+
+            <MudTextField T="string"
+                          @bind-Value="_searchString"
+                          Placeholder="Search contacts..."
+                          Immediate="true"
+                          Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          IconSize="Size.Medium" />
+        </ToolBarContent>
+
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel T="Contact" SortBy="@(c => c.FirstName)">
+                    First Name
+                </MudTableSortLabel>
+            </MudTh>
+
+            <MudTh>
+                <MudTableSortLabel T="Contact" SortBy="@(c => c.LastName)">
+                    Last Name
+                </MudTableSortLabel>
+            </MudTh>
+
+            <MudTh>Email</MudTh>
+            <MudTh>Phone Number</MudTh>
+            <MudTh>Company</MudTh>
+        </HeaderContent>
+
+        <RowTemplate>
+            <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+            <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+            <MudTd DataLabel="Email">@context.Email</MudTd>
+            <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
+            <MudTd DataLabel="Company">@context.Company</MudTd>
+        </RowTemplate>
+
+        <PagerContent>
+            <MudTablePager PageSizeOptions="[10, 25, 50, 100]" />
+        </PagerContent>
+
+    </MudTable>
     
 </MudContainer>
 
 @code {
     private List<Contact> _contacts = new();
+    
+    private string _searchString = "";
 
     protected override async Task OnInitializedAsync()
     {
-        _contacts = await DbContext.Contacts.ToListAsync();
+        _contacts = await DbContext.Contacts
+            .OrderByDescending(c => c.Id)
+            .ToListAsync();
+    }
+    
+    private bool FilterContacts(Contact contact)
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        return contact.FirstName.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
+               || contact.LastName.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
+               || contact.Email.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
+               || contact.Company.Contains(_searchString, StringComparison.OrdinalIgnoreCase);
     }
 }

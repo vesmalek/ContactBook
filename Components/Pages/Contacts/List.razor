@@ -1,7 +1,18 @@
 @page "/contacts/list"
+@using ContactBook.Models
+@using ContactBook.Data
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext DbContext
 
-<h3>List</h3>
+<MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex flex-column align-center mt-10">
+    
+</MudContainer>
 
 @code {
-    
+    private List<Contact> _contacts = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _contacts = await DbContext.Contacts.ToListAsync();
+    }
 }

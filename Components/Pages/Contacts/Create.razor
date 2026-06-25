@@ -2,6 +2,7 @@
 @using ContactBook.Data
 @using ContactBook.Models
 @inject AppDbContext DbContext
+@inject ISnackbar Snackbar
 
 <MudContainer MaxWidth="MaxWidth.Medium"
               Class="d-flex flex-column align-center mt-10">
@@ -74,14 +75,16 @@
 
 @code {
     private Contact _contact = new();
-    // private bool showSuccessMessage = false;
 
     private async Task HandleSubmit()
     {
         DbContext.Contacts.Add(_contact);
         await DbContext.SaveChangesAsync();
+        
+        Snackbar.Add(
+            "Contact saved successfully",
+            Severity.Success);
 
-        // showSuccessMessage = true;
         _contact = new Contact();
     }
 }

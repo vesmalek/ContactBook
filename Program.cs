@@ -2,11 +2,16 @@ using MudBlazor.Services;
 using ContactBook.Components;
 using ContactBook.Data;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add MudBlazor services
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(config =>
+{
+    config.SnackbarConfiguration.PositionClass =
+        Defaults.Classes.Position.BottomRight;
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

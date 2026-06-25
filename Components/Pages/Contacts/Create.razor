@@ -3,14 +3,14 @@
 @using ContactBook.Models
 @inject AppDbContext DbContext
 @inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
 
-<MudContainer MaxWidth="MaxWidth.Medium"
-              Class="d-flex flex-column align-center mt-10">
+<MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex flex-column align-center mt-20">
     
     <EditForm Model="_contact" OnValidSubmit="HandleSubmit">
         <DataAnnotationsValidator />
 
-        <MudCard Class="pa-6" Style="min-width:450px;">
+        <MudCard Class="pr-6 pb-6 pl-6" Style="min-width:450px;" Elevation="2">
             <MudCardContent>
 
                 <MudText Typo="Typo.h5" Class="mb-4">
@@ -22,7 +22,7 @@
                               @bind-Value="_contact.FirstName"
                               For="@(() => _contact.FirstName)"
                               Immediate="true"
-                              Variant="Variant.Outlined" />
+                              Variant="Variant.Outlined"/>
 
                 <MudTextField T="string"
                               Label="Last Name"
@@ -30,7 +30,7 @@
                               @bind-Value="_contact.LastName"
                               For="@(() => _contact.LastName)"
                               Immediate="true"
-                              Variant="Variant.Outlined" />
+                              Variant="Variant.Outlined"/>
 
                 <MudTextField T="string"
                               Label="Email"
@@ -38,7 +38,7 @@
                               @bind-Value="_contact.Email"
                               For="@(() => _contact.Email)"
                               Immediate="true"
-                              Variant="Variant.Outlined" />
+                              Variant="Variant.Outlined"/>
 
                 <MudTextField T="string"
                               Label="Phone Number"
@@ -46,7 +46,7 @@
                               @bind-Value="_contact.PhoneNumber"
                               For="@(() => _contact.PhoneNumber)"
                               Immediate="true"
-                              Variant="Variant.Outlined" />
+                              Variant="Variant.Outlined"/>
 
                 <MudTextField T="string"
                               Label="Company"
@@ -54,18 +54,28 @@
                               @bind-Value="_contact.Company"
                               For="@(() => _contact.Company)"
                               Immediate="true"
-                              Variant="Variant.Outlined" />
+                              Variant="Variant.Outlined"/>
 
             </MudCardContent>
 
             <MudCardActions>
-                <MudSpacer />
-
-                <MudButton ButtonType="ButtonType.Submit"
-                           Variant="Variant.Filled"
-                           Color="Color.Primary">
-                    Save Contact
-                </MudButton>
+                <MudStack Row="true"
+                          Spacing="2"
+                          Justify="Justify.FlexEnd"
+                          Style="width:100%;">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Default"
+                               StartIcon="@Icons.Material.Filled.ArrowBack"
+                               OnClick="GoBack">
+                        Cancel
+                    </MudButton>
+                    <MudButton ButtonType="ButtonType.Submit"
+                               StartIcon="@Icons.Material.Filled.Save"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary">
+                        Save Contact
+                    </MudButton>
+                </MudStack>
 
             </MudCardActions>
         </MudCard>
@@ -86,5 +96,10 @@
             Severity.Success);
 
         _contact = new Contact();
+    }
+    
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
     }
 }

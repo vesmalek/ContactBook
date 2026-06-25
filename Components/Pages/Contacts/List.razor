@@ -6,60 +6,66 @@
 @inject NavigationManager NavigationManager
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="d-flex flex-column align-center mt-20">
-    
-    <MudTable Items="_contacts"
-              Hover="true"
-              Striped="true"
-              FixedHeader="true"
-              Height="500px"
-              Style="width:100%;"
-              Filter="FilterContacts">
+    @if (_contacts.Count == 0)
+    {
+        <p>No contacts yet.</p>
+    }
+    else
+    {
+        <MudTable Items="_contacts"
+                  Hover="true"
+                  Striped="true"
+                  FixedHeader="true"
+                  Height="500px"
+                  Style="width:100%;"
+                  Filter="FilterContacts">
 
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Contacts</MudText>
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Contacts</MudText>
 
-            <MudSpacer />
+                <MudSpacer />
 
-            <MudTextField T="string"
-                          @bind-Value="_searchString"
-                          Placeholder="Search contacts..."
-                          Immediate="true"
-                          Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search"
-                          IconSize="Size.Medium" />
-        </ToolBarContent>
+                <MudTextField T="string"
+                              @bind-Value="_searchString"
+                              Placeholder="Search contacts..."
+                              Immediate="true"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium" />
+            </ToolBarContent>
 
-        <HeaderContent>
-            <MudTh>
-                <MudTableSortLabel T="Contact" SortBy="@(c => c.FirstName)">
-                    First Name
-                </MudTableSortLabel>
-            </MudTh>
+            <HeaderContent>
+                <MudTh>
+                    <MudTableSortLabel T="Contact" SortBy="@(c => c.FirstName)">
+                        First Name
+                    </MudTableSortLabel>
+                </MudTh>
 
-            <MudTh>
-                <MudTableSortLabel T="Contact" SortBy="@(c => c.LastName)">
-                    Last Name
-                </MudTableSortLabel>
-            </MudTh>
+                <MudTh>
+                    <MudTableSortLabel T="Contact" SortBy="@(c => c.LastName)">
+                        Last Name
+                    </MudTableSortLabel>
+                </MudTh>
 
-            <MudTh>Email</MudTh>
-            <MudTh>Phone Number</MudTh>
-            <MudTh>Company</MudTh>
-        </HeaderContent>
+                <MudTh>Email</MudTh>
+                <MudTh>Phone Number</MudTh>
+                <MudTh>Company</MudTh>
+            </HeaderContent>
 
-        <RowTemplate>
-            <MudTd DataLabel="First Name">@context.FirstName</MudTd>
-            <MudTd DataLabel="Last Name">@context.LastName</MudTd>
-            <MudTd DataLabel="Email">@context.Email</MudTd>
-            <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
-            <MudTd DataLabel="Company">@context.Company</MudTd>
-        </RowTemplate>
+            <RowTemplate>
+                <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+                <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+                <MudTd DataLabel="Email">@context.Email</MudTd>
+                <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
+                <MudTd DataLabel="Company">@context.Company</MudTd>
+            </RowTemplate>
 
-        <PagerContent>
-            <MudTablePager PageSizeOptions="[10, 25, 50, 100]" />
-        </PagerContent>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="[10, 25, 50, 100]" />
+            </PagerContent>
 
-    </MudTable>
+        </MudTable>
+    }
     
     <MudFab Color="Color.Primary"
             StartIcon="@Icons.Material.Filled.Add"

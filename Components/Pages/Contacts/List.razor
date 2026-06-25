@@ -3,6 +3,7 @@
 @using ContactBook.Data
 @using Microsoft.EntityFrameworkCore
 @inject AppDbContext DbContext
+@inject NavigationManager NavigationManager
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="d-flex flex-column align-center mt-20">
     
@@ -60,6 +61,11 @@
 
     </MudTable>
     
+    <MudFab Color="Color.Primary"
+            StartIcon="@Icons.Material.Filled.Add"
+            OnClick="GoToCreate"
+            Style="position: fixed; bottom: 24px; right: 24px;" />
+    
 </MudContainer>
 
 @code {
@@ -83,5 +89,10 @@
                || contact.LastName.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
                || contact.Email.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
                || contact.Company.Contains(_searchString, StringComparison.OrdinalIgnoreCase);
+    }
+    
+    private void GoToCreate()
+    {
+        NavigationManager.NavigateTo("/contacts/create");
     }
 }

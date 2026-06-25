@@ -106,7 +106,9 @@
     {
         _isLoading = true;
 
-        _contacts = [];
+        _contacts = await DbContext.Contacts
+            .OrderByDescending(c => c.Id)
+            .ToListAsync();
         
         _isLoading = false;
     }

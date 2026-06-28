@@ -84,13 +84,13 @@
                 <MudTd DataLabel="Company">@context.Company</MudTd>
                 <MudTd>
                     <MudButton Variant="Variant.Filled"
-                               Color="Color.Primary"
+                               Color="Color.Default"
                                StartIcon="@Icons.Material.Filled.Edit"
                                OnClick="() => HandleEdit(context.Id)">
                         Edit
                     </MudButton>
                     <MudButton Variant="Variant.Filled"
-                               Color="Color.Default"
+                               Color="Color.Error"
                                StartIcon="@Icons.Material.Filled.Delete"
                                OnClick="() => HandleDelete(context.Id)">
                         Delete

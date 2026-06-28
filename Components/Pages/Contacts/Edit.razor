@@ -1,0 +1,129 @@
+@page "/contact/edit/{Id:int}"
+@using ContactBook.Data
+@using ContactBook.Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext DbContext
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex flex-column align-center mt-20">
+    @if (_contact is null)
+    {
+        <MudPaper Class="pr-20 pl-20 pt-8 pb-8 text-center" Elevation="2">
+            <MudIcon Icon="@Icons.Material.Filled.PeopleOutline"
+                     Size="Size.Large" />
+
+            <MudText Typo="Typo.h6">
+                No contact found
+            </MudText>
+
+            <MudLink Href="/" Color="Color.Primary">
+                Back to list
+            </MudLink>
+        </MudPaper>
+    }
+    else
+    {
+        <EditForm Model="_contact" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+
+            <MudCard Class="pr-6 pb-6 pl-6" Style="min-width:450px;" Elevation="2">
+                <MudCardContent>
+
+                    <MudText Typo="Typo.h5" Class="mb-4">
+                        Edit Contact
+                    </MudText>
+
+                    <MudTextField T="string"
+                                  Label="First Name"
+                                  @bind-Value="_contact.FirstName"
+                                  For="@(() => _contact.FirstName)"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"/>
+
+                    <MudTextField T="string"
+                                  Label="Last Name"
+                                  Class="mt-4"
+                                  @bind-Value="_contact.LastName"
+                                  For="@(() => _contact.LastName)"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"/>
+
+                    <MudTextField T="string"
+                                  Label="Email"
+                                  Class="mt-4"
+                                  @bind-Value="_contact.Email"
+                                  For="@(() => _contact.Email)"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"/>
+
+                    <MudTextField T="string"
+                                  Label="Phone Number"
+                                  Class="mt-4"
+                                  @bind-Value="_contact.PhoneNumber"
+                                  For="@(() => _contact.PhoneNumber)"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"/>
+
+                    <MudTextField T="string"
+                                  Label="Company"
+                                  Class="mt-4"
+                                  @bind-Value="_contact.Company"
+                                  For="@(() => _contact.Company)"
+                                  Immediate="true"
+                                  Variant="Variant.Outlined"/>
+
+                </MudCardContent>
+
+                <MudCardActions>
+                    <MudStack Row="true"
+                              Spacing="2"
+                              Justify="Justify.FlexEnd"
+                              Style="width:100%;">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Default"
+                                   StartIcon="@Icons.Material.Filled.ArrowBack"
+                                   OnClick="GoBack">
+                            Cancel
+                        </MudButton>
+                        <MudButton ButtonType="ButtonType.Submit"
+                                   StartIcon="@Icons.Material.Filled.Save"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary">
+                            Save Contact
+                        </MudButton>
+                    </MudStack>
+
+                </MudCardActions>
+            </MudCard>
+        </EditForm>
+    }
+</MudContainer>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Contact? _contact;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _contact = await DbContext.Contacts.FirstOrDefaultAsync(c => c.Id == Id);
+    }
+
+    private async Task HandleSubmit()
+    {
+        await DbContext.SaveChangesAsync();
+        
+        Snackbar.Add(
+            "Contact updated successfully",
+            Severity.Success);
+        
+        GoBack();
+    }
+    
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

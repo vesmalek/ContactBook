@@ -84,6 +84,12 @@
                 <MudTd DataLabel="Company">@context.Company</MudTd>
                 <MudTd>
                     <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Edit"
+                               OnClick="() => HandleEdit(context.Id)">
+                        Edit
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
                                Color="Color.Default"
                                StartIcon="@Icons.Material.Filled.Delete"
                                OnClick="() => HandleDelete(context.Id)">
@@ -157,5 +163,10 @@
     private void GoToCreate()
     {
         NavigationManager.NavigateTo("/contacts/create");
+    }
+    
+    private void HandleEdit(int id)
+    {
+        NavigationManager.NavigateTo($"/contact/edit/{id}");
     }
 }

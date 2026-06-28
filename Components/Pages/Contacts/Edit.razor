@@ -1,0 +1,38 @@
+@page "/contact/edit/{Id:int}"
+@using ContactBook.Data
+@using ContactBook.Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext DbContext
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+
+
+<h3>Edit Todo</h3>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Contact? _contact;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _contact = await DbContext.Contacts.FirstOrDefaultAsync(c => c.Id == Id);
+    }
+
+    private async Task HandleSubmit()
+    {
+        await DbContext.SaveChangesAsync();
+        
+        Snackbar.Add(
+            "Contact updated successfully",
+            Severity.Success);
+        
+        GoBack();
+    }
+    
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

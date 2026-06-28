@@ -4,6 +4,7 @@
 @using Microsoft.EntityFrameworkCore
 @inject AppDbContext DbContext
 @inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="d-flex flex-column align-center mt-20">
     @if (_isLoading)
@@ -72,6 +73,7 @@
                 <MudTh>Email</MudTh>
                 <MudTh>Phone Number</MudTh>
                 <MudTh>Company</MudTh>
+                <MudTh>Actions</MudTh>
             </HeaderContent>
 
             <RowTemplate>
@@ -80,6 +82,14 @@
                 <MudTd DataLabel="Email">@context.Email</MudTd>
                 <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
                 <MudTd DataLabel="Company">@context.Company</MudTd>
+                <MudTd>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Default"
+                               StartIcon="@Icons.Material.Filled.Delete"
+                               OnClick="() => HandleDelete(context.Id)">
+                        Delete
+                    </MudButton>
+                </MudTd>
             </RowTemplate>
 
             <PagerContent>
@@ -112,6 +122,25 @@
             .ToListAsync();
         
         _isLoading = false;
+    }
+    
+    private async Task HandleDelete(int id)
+    {
+        var contact = await DbContext.Contacts.FirstOrDefaultAsync(t => t.Id == id);
+
+        if (contact is null)
+        {
+            return;
+        }
+
+        DbContext.Contacts.Remove(contact);
+        await DbContext.SaveChangesAsync();
+
+        _contacts = await DbContext.Contacts.ToListAsync();
+        
+        Snackbar.Add(
+            "Contact deleted successfully",
+            Severity.Success);
     }
     
     private bool FilterContacts(Contact contact)

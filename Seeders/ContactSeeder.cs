@@ -1,18 +1,15 @@
+using ContactBook.Data;
 using ContactBook.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContactBook.Data;
+namespace ContactBook.Seeders;
 
-public static class SeedData
+public static class ContactSeeder
 {
-    public static async Task InitializeAsync(IServiceProvider services)
+    public static async Task SeedAsync(IServiceProvider serviceProvider)
     {
-        using var scope = services.CreateScope();
-
-        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-        await context.Database.MigrateAsync();
-
+        var context = serviceProvider.GetRequiredService<AppDbContext>();
+        
         var contactsToSeed = new List<Contact>
         {
             new() { FirstName="John", LastName="Doe", Email="john.doe@example.com", PhoneNumber="0711000001", Company="Microsoft" },

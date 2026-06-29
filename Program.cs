@@ -2,6 +2,7 @@ using MudBlazor.Services;
 using ContactBook.Components;
 using ContactBook.Data;
 using ContactBook.Models;
+using ContactBook.Seeders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
@@ -34,7 +35,11 @@ builder.Services.AddIdentityCore<AppUser>(options =>
 var app = builder.Build();
 
 // Seeding Data
-await SeedData.InitializeAsync(app.Services);
+using (var scope = app.Services.CreateScope())
+{
+    await DataSeeder.SeedAsync(scope.ServiceProvider);
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

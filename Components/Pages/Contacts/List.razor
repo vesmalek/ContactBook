@@ -1,6 +1,8 @@
 @page "/"
+@attribute [Authorize]
 @using ContactBook.Models
 @using ContactBook.Data
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @inject AppDbContext DbContext
 @inject NavigationManager NavigationManager

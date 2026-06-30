@@ -31,7 +31,16 @@ builder.Services.AddIdentityCore<AppUser>(options =>
         options.Password.RequiredLength = 6;
     })
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddSignInManager();
+
+// Handles the authentication cookie
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = IdentityConstants.ApplicationScheme;
+        options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
+    })
+    .AddIdentityCookies();
 
 var app = builder.Build();
 

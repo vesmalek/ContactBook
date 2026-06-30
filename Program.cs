@@ -1,3 +1,4 @@
+using ContactBook;
 using MudBlazor.Services;
 using ContactBook.Components;
 using ContactBook.Data;
@@ -59,5 +60,7 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.MapLoginEndpoint();
 
 app.Run();

@@ -40,7 +40,13 @@ builder.Services.AddAuthentication(options =>
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
         options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
     })
-    .AddIdentityCookies();
+    .AddIdentityCookies(options =>
+    {
+        options.ApplicationCookie.Configure(cookie =>
+        {
+            cookie.LoginPath = "/login";
+        });
+    });
 
 var app = builder.Build();
 

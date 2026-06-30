@@ -1,3 +1,4 @@
+using ContactBook;
 using MudBlazor.Services;
 using ContactBook.Components;
 using ContactBook.Data;
@@ -30,7 +31,16 @@ builder.Services.AddIdentityCore<AppUser>(options =>
         options.Password.RequiredLength = 6;
     })
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddSignInManager();
+
+// Handles the authentication cookie
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = IdentityConstants.ApplicationScheme;
+        options.DefaultSignInScheme = IdentityConstants.ApplicationScheme;
+    })
+    .AddIdentityCookies();
 
 var app = builder.Build();
 
@@ -59,5 +69,10 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+app.MapLoginEndpoint();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

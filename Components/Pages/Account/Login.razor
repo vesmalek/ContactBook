@@ -1,0 +1,73 @@
+@page "/login"
+@using System.Web
+@inject NavigationManager Navigation
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="d-flex flex-column align-center mt-20">
+
+    <MudPaper Class="pa-6" Elevation="2" Style="min-width:450px;">
+
+        <MudText Typo="Typo.h5" Class="mb-4">
+            Login
+        </MudText>
+
+        @if (showError)
+        {
+            <MudAlert Severity="Severity.Error" Class="mb-4">
+                Invalid email or password.
+            </MudAlert>
+        }
+
+        <form method="post" action="/account/login">
+
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
+
+            <MudTextField T="string"
+                          Label="Email"
+                          Variant="Variant.Outlined"
+                          @bind-Value="email"
+                          name="email"
+                          InputType="InputType.Email"
+                          Class="mb-4" />
+
+            <MudTextField T="string"
+                          Label="Password"
+                          Variant="Variant.Outlined"
+                          @bind-Value="password"
+                          name="password"
+                          InputType="InputType.Password"
+                          Class="mb-4" />
+
+            <MudStack Row="true"
+                      Justify="Justify.FlexEnd">
+
+                <MudButton ButtonType="ButtonType.Submit"
+                           Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Login">
+                    Login
+                </MudButton>
+
+            </MudStack>
+
+        </form>
+
+    </MudPaper>
+
+</MudContainer>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? error { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? returnUrl { get; set; }
+
+    private string email = string.Empty;
+    private string password = string.Empty;
+    private bool showError;
+
+    protected override void OnInitialized()
+    {
+        showError = error == "true";
+    }
+}

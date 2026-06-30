@@ -72,4 +72,7 @@ app.MapRazorComponents<App>()
 
 app.MapLoginEndpoint();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.Run();

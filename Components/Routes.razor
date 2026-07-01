@@ -4,7 +4,18 @@
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
             <NotAuthorized>
-                <RedirectToLogin />
+                <AuthorizeView>
+                    <Authorized>
+                        <MudContainer MaxWidth="MaxWidth.Small" Class="mt-8">
+                            <MudAlert Severity="Severity.Error">
+                                You do not have permission to access this page.
+                            </MudAlert>
+                        </MudContainer>
+                    </Authorized>
+                    <NotAuthorized>
+                        <RedirectToLogin />
+                    </NotAuthorized>
+                </AuthorizeView>
             </NotAuthorized>
         </AuthorizeRouteView>
         <FocusOnNavigate RouteData="routeData" Selector="h1"/>

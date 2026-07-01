@@ -4,7 +4,7 @@
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
             <NotAuthorized>
-                <AuthorizeView>
+                <AuthorizeView Context="auth">
                     <Authorized>
                         <MudContainer MaxWidth="MaxWidth.Small" Class="mt-8">
                             <MudAlert Severity="Severity.Error">

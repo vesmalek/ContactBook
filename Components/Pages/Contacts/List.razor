@@ -76,7 +76,11 @@
                 <MudTh>Email</MudTh>
                 <MudTh>Phone Number</MudTh>
                 <MudTh>Company</MudTh>
-                <MudTh>Actions</MudTh>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <MudTh>Actions</MudTh>
+                    </Authorized>
+                </AuthorizeView>
             </HeaderContent>
 
             <RowTemplate>
@@ -85,20 +89,24 @@
                 <MudTd DataLabel="Email">@context.Email</MudTd>
                 <MudTd DataLabel="Phone Number">@context.PhoneNumber</MudTd>
                 <MudTd DataLabel="Company">@context.Company</MudTd>
-                <MudTd>
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Default"
-                               StartIcon="@Icons.Material.Filled.Edit"
-                               OnClick="() => HandleEdit(context.Id)">
-                        Edit
-                    </MudButton>
-                    <MudButton Variant="Variant.Filled"
-                               Color="Color.Error"
-                               StartIcon="@Icons.Material.Filled.Delete"
-                               OnClick="() => ConfirmDelete(context.Id)">
-                        Delete
-                    </MudButton>
-                </MudTd>
+                <AuthorizeView Roles="Admin" Context="auth">
+                    <Authorized>
+                        <MudTd>
+                            <MudButton Variant="Variant.Filled"
+                                       Color="Color.Default"
+                                       StartIcon="@Icons.Material.Filled.Edit"
+                                       OnClick="() => HandleEdit(context.Id)">
+                                Edit
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled"
+                                       Color="Color.Error"
+                                       StartIcon="@Icons.Material.Filled.Delete"
+                                       OnClick="() => ConfirmDelete(context.Id)">
+                                Delete
+                            </MudButton>
+                        </MudTd>
+                    </Authorized>
+                </AuthorizeView>
             </RowTemplate>
 
             <PagerContent>
@@ -108,10 +116,14 @@
         </MudTable>
     }
     
-    <MudFab Color="Color.Primary"
-            StartIcon="@Icons.Material.Filled.Add"
-            OnClick="GoToCreate"
-            Style="position: fixed; bottom: 24px; right: 24px;" />
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <MudFab Color="Color.Primary"
+                    StartIcon="@Icons.Material.Filled.Add"
+                    OnClick="GoToCreate"
+                    Style="position: fixed; bottom: 24px; right: 24px;" />
+        </Authorized>
+    </AuthorizeView>
     
 </MudContainer>
 

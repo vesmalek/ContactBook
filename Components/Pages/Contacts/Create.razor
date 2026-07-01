@@ -1,5 +1,5 @@
 @page "/contacts/create"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 @using ContactBook.Data
 @using ContactBook.Models
 @using Microsoft.AspNetCore.Authorization

@@ -1,12 +1,25 @@
 ﻿@using ContactBook.Components.Pages.Account
 @using Microsoft.AspNetCore.Components.Authorization
-<Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(Pages.NotFound)">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
-            <NotAuthorized>
-                <RedirectToLogin />
-            </NotAuthorized>
-        </AuthorizeRouteView>
-        <FocusOnNavigate RouteData="routeData" Selector="h1"/>
-    </Found>
-</Router>
+<CascadingAuthenticationState>
+    <Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(Pages.NotFound)">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
+                <NotAuthorized>
+                    <AuthorizeView Context="auth">
+                        <Authorized>
+                            <MudContainer MaxWidth="MaxWidth.Small" Class="mt-8">
+                                <MudAlert Severity="Severity.Error">
+                                    You do not have permission to access this page.
+                                </MudAlert>
+                            </MudContainer>
+                        </Authorized>
+                        <NotAuthorized>
+                            <RedirectToLogin />
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="routeData" Selector="h1"/>
+        </Found>
+    </Router>
+</CascadingAuthenticationState>

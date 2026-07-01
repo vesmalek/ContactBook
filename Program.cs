@@ -72,14 +72,14 @@ app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapLoginEndpoint();
 app.MapLogoutEndpoint();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.Run();

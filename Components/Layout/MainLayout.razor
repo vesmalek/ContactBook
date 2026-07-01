@@ -1,6 +1,7 @@
 ﻿@using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Navigation
 @inherits LayoutComponentBase
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="_isDarkMode"/>
@@ -10,7 +11,7 @@
 <MudLayout>
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
-        <MudText Typo="Typo.h5" Class="ml-3" Style="font-weight: bold;">ContactBook</MudText>
+        <MudText Typo="Typo.h5" Class="ml-3" Style="font-weight: bold; cursor: pointer;" @onclick='() => Navigation.NavigateTo("/")'>ContactBook</MudText>
         <MudSpacer/>
         <MudText Typo="Typo.body1" Class="mr-2">@_username</MudText>
         <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Inherit" OnClick="@DarkModeToggle"/>

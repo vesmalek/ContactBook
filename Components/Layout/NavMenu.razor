@@ -1,6 +1,9 @@
 ﻿<MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Contacts</MudNavLink>
-
-    <MudNavLink Href="/contacts/create" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Create Contact</MudNavLink>
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <MudNavLink Href="/contacts/create" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Create Contact</MudNavLink>
+        </Authorized>
+    </AuthorizeView>
 
 </MudNavMenu>

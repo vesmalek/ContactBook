@@ -77,6 +77,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapLoginEndpoint();
+app.MapLogoutEndpoint();
 
 app.UseAuthentication();
 app.UseAuthorization();
